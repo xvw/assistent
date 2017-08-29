@@ -1,5 +1,5 @@
 (*
- * My personnal blog engine ...
+ * Some various tools to manage some useless tasks
  *
  * Copyright (C) 2017  Xavier Van de Woestyne <xaviervdw@gmail.com>
  *
@@ -29,3 +29,7 @@ let exec command =
   let result = aux "" in
   let _ = Unix.close_process_in chan in
   result
+
+
+let download uri =
+  exec ("curl -L --fail --silent --show-error " ^ uri)

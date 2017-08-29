@@ -1,5 +1,5 @@
 (*
- * My personnal blog engine ...
+ * Some various tools to manage some useless tasks
  *
  * Copyright (C) 2017  Xavier Van de Woestyne <xaviervdw@gmail.com>
  *
