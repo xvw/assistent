@@ -19,31 +19,15 @@
  *
  *)
 
+let commit message =
+  Util.exec ({|git commit -m "|} ^ message ^ {|"|})
 
-let exec command =
-  let chan = Unix.open_process_in command in
-  let rec aux acc =
-    try aux (Format.sprintf "%s%c" acc (input_char chan))
-    with End_of_file -> acc
-  in
-  let result = aux "" in
-  let _ = Unix.close_process_in chan in
-  result
-
-
-let download uri =
-  exec ("curl -L --fail --silent --show-error " ^ uri)
-
-let read_int ?(prompt = Format.sprintf "%d >") ?(default=0) () =
-  let _ = print_string ((prompt default) ^ " ") in
-  match read_int_opt () with
-  | Some x -> x
-  | None -> default
-
-let read_line ?(prompt = ">") =
-  let _ = print_endline prompt in
-  read_line
-
-let now () =
-  Unix.time ()
-  |> Unix.gmtime
+let commit_at year month day message =
+  let fmt =
+    Format.sprintf 
+      {|GIT_AUTHOR_DATE="%04d-%02d-%02d 08:00 +100" git commit -m "%s"|}
+      year
+      month
+      day
+      message
+  in Util.exec fmt

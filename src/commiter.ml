@@ -19,4 +19,20 @@
  *
  *)
 
-let () = print_endline "Hello World"
+open Git
+
+
+let interactive_a () =
+  let ct = Util.now () in
+  let dyear = ct.Unix.tm_year + 1900
+  and dmonth = ct.Unix.tm_mon + 1
+  and dday = ct.Unix.tm_mday in
+  let year = Util.read_int ~prompt:(Format.sprintf "Year : %d >") ~default:dyear () in
+  let month = Util.read_int ~prompt:(Format.sprintf "Month : %d >") ~default:dmonth () in
+  let day = Util.read_int ~prompt:(Format.sprintf "Day : %d >") ~default:dday () in
+  let message = Util.read_line ~prompt:"Message>" () in
+  Git.commit_at year month day message
+
+let () =
+  interactive_a ()
+  |> ignore
