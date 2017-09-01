@@ -44,6 +44,15 @@ let read_line ?(prompt = ">") =
   let _ = print_endline prompt in
   read_line
 
+let read_char ?(prompt = ">") () =
+  let _ = print_endline prompt in
+  Scanf.scanf "%c\n" (fun x -> x)
+
+let rec yes_or_no ?(prompt = Format.sprintf "%c/%c>") ?(yes='y') ?(no='n') () =
+  let c = read_char ~prompt:(prompt yes no) () in
+  if c <> yes && c <> no then yes_or_no ~prompt ~yes ~no ()
+  else c = yes
+
 let now () =
   Unix.time ()
   |> Unix.gmtime

@@ -22,6 +22,20 @@
 open Git
 
 
+let add_all () =
+  let () = print_endline ( "Status\n ----\n" ^ Git.status ()) in
+  let () = print_endline "Would you add all updates in the code" in
+  if Util.yes_or_no () then
+    let _ = Git.add () in print_endline "Modifications added"
+  else print_endline "Modification aborted"
+
+let push () =
+  let () = print_endline "Would you like push the modification ?" in
+  if Util.yes_or_no () then
+    let _ = Git.push () in print_endline "Pushed"
+  else print_endline "Unpushed"
+
+
 let interactive_a () =
   let ct = Util.now () in
   let dyear = ct.Unix.tm_year + 1900
@@ -31,8 +45,12 @@ let interactive_a () =
   let month = Util.read_int ~prompt:(Format.sprintf "Month : %d >") ~default:dmonth () in
   let day = Util.read_int ~prompt:(Format.sprintf "Day : %d >") ~default:dday () in
   let message = Util.read_line ~prompt:"Message>" () in
-  Git.commit_at year month day message
+  let () = Format.printf "[%s] on %d-%d-%d \n Is that valid ?" message year month day in
+  if Util.yes_or_no () then
+    let _ = Git.commit_at year month day message in print_endline "Committed"
+  else print_endline "Uncommitted"
 
 let () =
-  interactive_a ()
-  |> ignore
+  add_all ();
+  interactive_a ();
+  push ()

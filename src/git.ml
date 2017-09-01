@@ -31,3 +31,7 @@ let commit_at year month day message =
       day
       message
   in Util.exec fmt
+
+let status () = Util.exec "git status"
+let add () = Util.exec "git add ."
+let push () = Util.exec "git push"
