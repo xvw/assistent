@@ -45,7 +45,7 @@ let interactive_a () =
   let month = Util.read_int ~prompt:(Format.sprintf "Month : %d >") ~default:dmonth () in
   let day = Util.read_int ~prompt:(Format.sprintf "Day : %d >") ~default:dday () in
   let message = Util.read_line ~prompt:"Message>" () in
-  let () = Format.printf "[%s] on %d-%d-%d \n Is that valid ?" message year month day in
+  let () = Format.printf "\n[%s] on %d-%d-%d \n Is that valid ?\n" message year month day in
   if Util.yes_or_no () then
     let _ = Git.commit_at year month day message in print_endline "Committed"
   else print_endline "Uncommitted"
