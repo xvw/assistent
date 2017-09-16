@@ -34,6 +34,9 @@ let exec command =
 let download uri =
   exec ("curl -L --fail --silent --show-error " ^ uri)
 
+let download_with_prompt uri =
+  exec ("curl -L --fail --show-error " ^ uri)
+
 let read_int ?(prompt = Format.sprintf "%d >") ?(default=0) () =
   let _ = print_string ((prompt default) ^ " ") in
   match read_int_opt () with
